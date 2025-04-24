@@ -1,103 +1,361 @@
-import Image from "next/image";
+import Link from "next/link"
+import Image from "next/image"
+import { BsFillLungsFill, BsImages } from "react-icons/bs"
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col min-h-screen">
+      <header className="border-b w-full">
+        <div className="w-full flex items-center h-16 justify-center md:justify-end px-4 md:px-6 py-2">
+          <nav className="hidden md:flex gap-6 text-2xl">
+            <Link href="#sobre" className="font-medium hover:underline underline-offset-4">
+              Sobre
+            </Link>
+            <Link href="#como-funciona" className="font-medium hover:underline underline-offset-4">
+              Como Funciona
+            </Link>
+            <Link href="#equipe" className="font-medium hover:underline underline-offset-4">
+              Equipe
+            </Link>
+            <Link href="#contato" className="font-medium hover:underline underline-offset-4">
+              Contato
+            </Link>
+          </nav>
         </div>
+      </header>
+
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 md:gap-10 justify-center mt-8 items-center mb-8 md:mb-4">
+        <BsFillLungsFill size={148} className="animate-pulse"/>
+        <span className="text-6xl sm:text-7xl md:text-9xl font-semibold">TB.AI</span>
+      </div>
+
+      <main className="flex-1">
+        <section className="w-full md:py-8 lg:py-12 border-slate-700/30 bg-gradient-to-b from-white to-sky-50">
+          <div className="container px-4 md:px-6 flex items-center mx-auto">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+              <div className="flex flex-col justify-center space-y-8">
+                <div className="space-y-6">
+                  <h1 className="text-3xl font-bold tracking-tighter text-center lg:text-left sm:text-4xl md:text-5xl lg:text-6xl/18">
+                    Diagnóstico de Tuberculose por Inteligência Artificial
+                  </h1>
+                  <p className="max-w-[600px] text-muted-foreground text-center lg:text-left sm:text-xl md:text-2xl">
+                    Utilizando redes neurais avançadas para análise de radiografias e diagnóstico preciso de
+                    tuberculose.
+                  </p>
+                </div>
+                <div className="flex flex-col sm:mx-auto lg:mx-0 gap-4 min-[400px]:flex-row">
+                  <Link href="/diagnostico">
+                    <button className="bg-black px-4 py-2 text-lg md:text-2xl text-white cursor-pointer font-semibold rounded-md hover:bg-neutral-700">
+                      Iniciar Diagnóstico
+                    </button>
+                  </Link>
+                  <Link href="#como-funciona">
+                    <button className="bg-white outline-1 outline-neutral-400 px-3 py-2 text-lg md:text-2xl text-black cursor-pointer font-semibold rounded-md hover:outline-none hover:text-white hover:bg-slate-600">
+                      Saiba Mais
+                    </button>
+                  </Link>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/lungs.png"
+                  width={500}
+                  height={400}
+                  alt="Radiografia de pulmão"
+                  className="rounded-lg object-cover border shadow-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="como-funciona" className="w-full py-12 md:py-24 lg:py-32 border-slate-700/30 ">
+          <div className="px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-7xl">Como Funciona</h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-2xl/relaxed">
+                  Nossa tecnologia utiliza algoritmos de aprendizado profundo para analisar radiografias torácicas e
+                  identificar sinais de tuberculose.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
+              <div className="flex flex-col justify-center space-y-4 rounded-lg border bg-background p-6 shadow-sm">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <BsImages size={32}/>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold">Envie sua Radiografia</h3>
+                  <p className="text-muted-foreground text-lg">
+                    Faça o upload da radiografia torácica em formato digital para análise.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-center space-y-4 rounded-lg border bg-background p-6 shadow-sm">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-10 w-10"
+                  >
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold">Processamento por IA</h3>
+                  <p className="text-muted-foreground text-lg">
+                    Nossa rede neural analisa a imagem identificando padrões associados à tuberculose.
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-center space-y-4 rounded-lg border bg-background p-6 shadow-sm">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-10 w-10"
+                  >
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-2xl font-bold">Resultados Rápidos</h3>
+                  <p className="text-muted-foreground text-lg">
+                    Receba um relatório detalhado com a probabilidade de tuberculose em minutos.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="sobre" className="w-full flex items-center justify-around py-12 md:py-24 lg:py-32 bg-gradient-to-b from-white to-sky-50 border-slate-700/30">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+              <div className="flex flex-col justify-center space-y-4">
+                <div className="space-y-6">
+                  <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-7xl">Sobre o Projeto</h2>
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-2xl/relaxed">
+                    O TBScan é um projeto desenvolvido por pesquisadores brasileiros com o objetivo de auxiliar no
+                    diagnóstico precoce da tuberculose, especialmente em regiões com acesso limitado a especialistas.
+                  </p>
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-2xl/relaxed">
+                    Nossa tecnologia utiliza redes neurais convolucionais treinadas com milhares de radiografias para
+                    identificar padrões associados à tuberculose com alta precisão.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/doctors.png"
+                  width={500}
+                  height={400}
+                  alt="Equipe médica analisando radiografias"
+                  className="rounded-lg object-cover border shadow-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="equipe" className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container px-4 md:px-6 mx-auto">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Nossa Equipe</h2>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Conheça os profissionais por trás do desenvolvimento desta tecnologia inovadora.
+                </p>
+              </div>
+            </div>
+            <div className="mx-auto grid max-w-5xl gap-6 py-12 lg:grid-cols-3">
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <Image
+                  src="/fotos/ferreira.png"
+                  width={200}
+                  height={200}
+                  alt="Vitor Hugo Ferreira"
+                  className="rounded-full object-cover"
+                />
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold">Vitor Hugo Ferreira</h3>
+                  <p className="text-muted-foreground">Desenvolvedor Front-end</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <Image
+                  src="/fotos/anaclara.png"
+                  width={200}
+                  height={200}
+                  alt="Dr. Carlos Oliveira"
+                  className="rounded-full object-cover"
+                />
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold">Ana Clara Ribeiro</h3>
+                  <p className="text-muted-foreground">UI/UX Designer e Ilustradora</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                <Image
+                  src="/fotos/vinicios.png"
+                  width={200}
+                  height={200}
+                  alt="Dra. Mariana Santos"
+                  className="rounded-full object-cover"
+                />
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold">Vinicios Balduíno</h3>
+                  <p className="text-muted-foreground">Matemático e Professor</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contato" className="w-full py-12 md:py-24 lg:py-32 flex items-center justify-center bg-gradient-to-b from-white to-sky-50">
+          <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Entre em Contato</h2>
+              <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Tem dúvidas ou gostaria de implementar nossa tecnologia em sua instituição? Entre em contato conosco.
+              </p>
+            </div>
+            <div className="bg-white flex flex-col gap-4 rounded-lg border p-6 shadow-lg">
+              <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <label
+                    htmlFor="name"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Nome
+                  </label>
+                  <input
+                    id="name"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    placeholder="Digite seu nome"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    placeholder="Digite seu email"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <label
+                    htmlFor="message"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Mensagem
+                  </label>
+                  <textarea
+                    id="message"
+                    className="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    placeholder="Digite sua mensagem"
+                  />
+                </div>
+              </div>
+              <button className="px-4 py-2 self-center text-xl text-white rounded-md bg-slate-800 font-semibold cursor-pointer hover:bg-slate-600 hover:outline w-min">
+                Enviar
+              </button>
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="w-full flex flex-col items-center">
+        <div className="container flex flex-col gap-4 py-10 md:flex-row md:gap-8 md:py-12">
+          <div className="flex flex-col items-center gap-2 md:gap-3 lg:gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-4xl font-semibold">TB.AI</span>
+            </div>
+            <p className="text-lg text-center text-muted-foreground">Diagnóstico de tuberculose por inteligência artificial</p>
+          </div>
+          <div className="md:ml-auto grid px-5 gap-8 grid-cols-2 sm:grid-cols-3">
+            <div className="grid gap-3">
+              <h3 className="text-sm font-medium">Navegação</h3>
+              <nav className="grid gap-2 text-sm">
+                <Link href="#" className="hover:underline">
+                  Início
+                </Link>
+                <Link href="#sobre" className="hover:underline">
+                  Sobre
+                </Link>
+                <Link href="#como-funciona" className="hover:underline">
+                  Como Funciona
+                </Link>
+                <Link href="#equipe" className="hover:underline">
+                  Equipe
+                </Link>
+              </nav>
+            </div>
+            <div className="grid gap-3">
+              <h3 className="text-sm font-medium">Recursos</h3>
+              <nav className="grid gap-2 text-sm">
+                <Link href="#" className="hover:underline">
+                  Documentação
+                </Link>
+                <Link href="#" className="hover:underline">
+                  Pesquisas
+                </Link>
+                <Link href="#" className="hover:underline">
+                  Publicações
+                </Link>
+                <Link href="#" className="hover:underline">
+                  FAQ
+                </Link>
+              </nav>
+            </div>
+            <div className="grid gap-3">
+              <h3 className="text-sm font-medium">Legal</h3>
+              <nav className="grid gap-2 text-sm">
+                <Link href="#" className="hover:underline">
+                  Termos de Uso
+                </Link>
+                <Link href="#" className="hover:underline">
+                  Política de Privacidade
+                </Link>
+                <Link href="#" className="hover:underline">
+                  Aviso Médico
+                </Link>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 border-t py-6 px-4 md:flex-row md:items-center md:justify-evenly w-full">
+          <p className="text-xs text-muted-foreground md:text-left">
+            &copy; {new Date().getFullYear()} TB.AI. Todos os direitos reservados.
+          </p>
+          <p className="text-xs text-muted-foreground md:ml-auto md:text-right">
+            <strong>Aviso:</strong> Esta ferramenta é um auxílio ao diagnóstico e não substitui a avaliação de um
+            profissional de saúde.
+          </p>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
