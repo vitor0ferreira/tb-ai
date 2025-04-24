@@ -157,10 +157,10 @@ export default function Diagnostico() {
           </div>
         </div>
       </main>
-      <footer className="border-t bg-muted">
-        <div className="container flex flex-col gap-2 py-6 md:flex-row md:items-center">
+      <footer className="border-t bg-muted flex justify-center">
+        <div className="container flex flex-col gap-2 py-6 md:flex-row md:items-center justify-between w-full">
           <p className="text-xs text-muted-foreground md:text-left">
-            &copy; {new Date().getFullYear()} TBScan. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} TB.AI. Todos os direitos reservados.
           </p>
           <p className="text-xs text-muted-foreground md:ml-auto md:text-right">
             <strong>Aviso:</strong> Esta ferramenta é um auxílio ao diagnóstico e não substitui a avaliação de um
