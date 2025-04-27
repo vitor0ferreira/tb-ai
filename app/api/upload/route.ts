@@ -1,28 +1,21 @@
+import { NextRequest, NextResponse } from "next/server";
 
-import { NextResponse } from 'next/server'
-import { writeFile } from 'fs/promises'
-import path from 'path'
+export async function POST(req: NextRequest) {
+  try {
+    const { image } = await req.json();
 
-export async function POST(request: Request) {
-  const formData = await request.formData()
-  const file = formData.get('file') as File
+    if (!image) {
+      return NextResponse.json({ error: "Imagem não fornecida" }, { status: 400 });
+    }
 
-  if (!file) {
-    return NextResponse.json({ error: 'Nenhum arquivo enviado.' }, { status: 400 })
+    // Aqui vai ser onde vou enviar a imagem pro backend da aplicação de análise
+    // quando estiver pronta e retornar o resultado pro cliente depois.
+
+    console.log("Recebi imagem base64, tamanho:", image.length);
+
+    return NextResponse.json({ message: "Imagem recebida com sucesso!" });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: "Erro no servidor" }, { status: 500 });
   }
-
-  const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes)
-
-  // Caminho onde o arquivo será salvo
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads')
-  const fileName = `${Date.now()}-${file.name}` // Evitar conflitos
-  const filePath = path.join(uploadDir, fileName)
-
-  await writeFile(filePath, buffer)
-
-  // URL pública
-  const fileUrl = `/uploads/${fileName}`
-
-  return NextResponse.json({ url: fileUrl })
 }
