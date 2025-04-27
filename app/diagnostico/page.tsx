@@ -2,9 +2,12 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Upload, AlertTriangle, ArrowLeft, Download, Share2 } from "lucide-react"
+import { AlertTriangle, ArrowLeft, Download, Share2 } from "lucide-react"
+import UploadImageCard from "@/components/UploadImageCard"
 
 export default function Diagnostico() {
+
+
   return (
     <div className="flex flex-col min-h-screen">
       
@@ -22,20 +25,7 @@ export default function Diagnostico() {
 
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Envie sua Radiografia</CardTitle>
-                  <CardDescription>Faça o upload de uma radiografia torácica para análise por nossa IA</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-10 text-center">
-                    <Upload className="h-10 w-10 text-muted-foreground mb-4" />
-                    <p className="mb-2 text-sm font-semibold">Clique para fazer upload ou arraste e solte</p>
-                    <p className="text-xs text-muted-foreground mb-4">Suporta JPG ou PNG (máx. 10MB)</p>
-                    <Button>Selecionar Arquivo</Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <UploadImageCard />
             </div>
 
             <div className="space-y-6">
@@ -50,6 +40,8 @@ export default function Diagnostico() {
                       <Image
                         src="/lungs.png"
                         fill
+                        priority
+                        sizes="(max-width: 768px) 90vw, (max-width: 1200px) 50vw, 33vw"
                         alt="Radiografia analisada"
                         className="rounded-lg object-cover border opacity-25 animate-pulse"
                       />
@@ -116,17 +108,7 @@ export default function Diagnostico() {
           </div>
         </div>
       </main>
-      <footer className="border-t bg-muted flex justify-center">
-        <div className="container flex flex-col gap-2 py-6 md:flex-row md:items-center justify-between w-full">
-          <p className="text-xs text-muted-foreground md:text-left">
-            &copy; {new Date().getFullYear()} TB.AI. Todos os direitos reservados.
-          </p>
-          <p className="text-xs text-muted-foreground md:ml-auto md:text-right">
-            <strong>Aviso:</strong> Esta ferramenta é um auxílio ao diagnóstico e não substitui a avaliação de um
-            profissional de saúde.
-          </p>
-        </div>
-      </footer>
+      
     </div>
   )
 }
