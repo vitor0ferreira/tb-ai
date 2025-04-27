@@ -22,7 +22,6 @@ export default function UploadImageCard() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Funções de Drag and Drop
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.currentTarget.classList.add("bg-slate-200");
@@ -33,7 +32,7 @@ export default function UploadImageCard() {
     e.currentTarget.classList.remove("bg-slate-200");
   };
 
-  // Enviar imagem para o servidor
+
   const handleSendImage = async () => {
     if (!imageBase64) return;
 
@@ -60,16 +59,16 @@ export default function UploadImageCard() {
     }
   };
 
-  // Função que lida com a seleção de uma imagem
+  
   const handleSelectImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setLoadingImage(true); // Começa o carregamento da imagem
+    setLoadingImage(true);
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImageBase64(reader.result as string); // Quando a imagem estiver carregada
-      setLoadingImage(false); // Remove o skeleton
+      setImageBase64(reader.result as string);
+      setLoadingImage(false);
     };
     reader.readAsDataURL(file);
   };
@@ -85,19 +84,19 @@ export default function UploadImageCard() {
 
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImageBase64(reader.result as string); // Quando a imagem estiver carregada
-        setLoadingImage(false); // Remove o skeleton
+        setImageBase64(reader.result as string);
+        setLoadingImage(false);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // Função para limpar a seleção da imagem
+
   const handleClearSelection = () => {
     setImageBase64(null);
     setLoadingImage(false);
     if (inputRef.current) {
-      inputRef.current.value = ""; // Limpa o input
+      inputRef.current.value = "";
     }
   };
 
