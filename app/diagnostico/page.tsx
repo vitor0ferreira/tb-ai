@@ -3,52 +3,11 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Upload, AlertTriangle, ArrowLeft, Download, Share2 } from "lucide-react"
-import { BsFillLungsFill } from "react-icons/bs"
 
 export default function Diagnostico() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="border-b w-full flex justify-center">
-        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-          <div className="flex items-center gap-2">
-            <BsFillLungsFill className="h-6 w-6 text-primary" />
-            <span className="text-lg md:text-3xl font-semibold">TB.AI</span>
-          </div>
-          <nav className="hidden md:flex gap-6 text-2xl">
-            <Link href="#sobre" className="font-medium hover:underline underline-offset-4">
-              Sobre
-            </Link>
-            <Link href="#como-funciona" className="font-medium hover:underline underline-offset-4">
-              Como Funciona
-            </Link>
-            <Link href="#equipe" className="font-medium hover:underline underline-offset-4">
-              Equipe
-            </Link>
-            <Link href="#contato" className="font-medium hover:underline underline-offset-4">
-              Contato
-            </Link>
-          </nav>
-          <Button variant="outline" size="icon" className="md:hidden">
-            <span className="sr-only">Menu</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
-          </Button>
-        </div>
-      </header>
+      
       <main className="flex-1 flex justify-center">
         <div className="container px-4 py-6 md:px-6 md:py-12">
           <div className="flex items-center gap-2 mb-8">
