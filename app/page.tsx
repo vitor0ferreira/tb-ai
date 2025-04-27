@@ -1,58 +1,41 @@
 import Link from "next/link"
 import Image from "next/image"
 import { BsFillLungsFill, BsImages } from "react-icons/bs"
+import { Button } from "@/components/ui/button"
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="border-b w-full">
-        <div className="w-full flex items-center h-16 justify-center md:justify-end px-4 md:px-6 py-2">
-          <nav className="hidden md:flex gap-6 text-2xl">
-            <Link href="#sobre" className="font-medium hover:underline underline-offset-4">
-              Sobre
-            </Link>
-            <Link href="#como-funciona" className="font-medium hover:underline underline-offset-4">
-              Como Funciona
-            </Link>
-            <Link href="#equipe" className="font-medium hover:underline underline-offset-4">
-              Equipe
-            </Link>
-            <Link href="#contato" className="font-medium hover:underline underline-offset-4">
-              Contato
-            </Link>
-          </nav>
-        </div>
-      </header>
 
       <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 md:gap-10 justify-center mt-8 items-center mb-8 md:mb-4">
-        <BsFillLungsFill size={148} className="animate-pulse"/>
-        <span className="text-6xl sm:text-7xl md:text-9xl font-semibold">TB.AI</span>
+        <BsFillLungsFill className="animate-pulse size-32 md:size-48"/>
+        <span className="text-7xl sm:text-8xl md:text-9xl font-bold">TB.AI</span>
       </div>
 
       <main className="flex-1">
         <section className="w-full md:py-8 lg:py-12 border-slate-700/30 bg-gradient-to-b from-white to-sky-50">
-          <div className="container px-4 md:px-6 flex items-center mx-auto">
+          <div className="container py-2 px-4 md:px-6 flex items-center mx-auto">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
               <div className="flex flex-col justify-center space-y-8">
                 <div className="space-y-6">
                   <h1 className="text-3xl font-bold tracking-tighter text-center lg:text-left sm:text-4xl md:text-5xl lg:text-6xl/18">
                     Diagnóstico de Tuberculose por Inteligência Artificial
                   </h1>
-                  <p className="max-w-[600px] text-muted-foreground text-center lg:text-left sm:text-xl md:text-2xl">
+                  <p className="max-w-full sm:max-w-[720px] lg:max-w-[600px] text-muted-foreground text-center lg:text-left text-lg sm:text-xl md:text-2xl">
                     Utilizando redes neurais avançadas para análise de radiografias e diagnóstico preciso de
                     tuberculose.
                   </p>
                 </div>
-                <div className="flex flex-col sm:mx-auto lg:mx-0 gap-4 min-[400px]:flex-row">
+                <div className="flex flex-col items-center mx-auto lg:mx-0 gap-4 min-[400px]:flex-row">
                   <Link href="/diagnostico">
-                    <button className="bg-black px-4 py-2 text-lg md:text-2xl text-white cursor-pointer font-semibold rounded-md hover:bg-neutral-700">
+                    <Button className="sm:text-lg cursor-pointer">
                       Iniciar Diagnóstico
-                    </button>
+                    </Button>
                   </Link>
                   <Link href="#como-funciona">
-                    <button className="bg-white outline-1 outline-neutral-400 px-3 py-2 text-lg md:text-2xl text-black cursor-pointer font-semibold rounded-md hover:outline-none hover:text-white hover:bg-slate-600">
+                    <Button className="sm:text-lg cursor-pointer" variant={"outline"}>
                       Saiba Mais
-                    </button>
+                    </Button>
                   </Link>
                 </div>
               </div>
@@ -345,15 +328,6 @@ export default function Home() {
               </nav>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col gap-4 border-t py-6 px-4 md:flex-row md:items-center md:justify-evenly w-full">
-          <p className="text-xs text-muted-foreground md:text-left">
-            &copy; {new Date().getFullYear()} TB.AI. Todos os direitos reservados.
-          </p>
-          <p className="text-xs text-muted-foreground md:ml-auto md:text-right">
-            <strong>Aviso:</strong> Esta ferramenta é um auxílio ao diagnóstico e não substitui a avaliação de um
-            profissional de saúde.
-          </p>
         </div>
       </footer>
     </div>
