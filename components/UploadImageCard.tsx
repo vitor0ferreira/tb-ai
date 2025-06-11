@@ -9,14 +9,21 @@ import {
   CardContent,
   CardFooter,
 } from "./ui/card";
-import { DragEvent, useState, useRef } from "react";
+import { DragEvent, useState, useRef, Dispatch, SetStateAction } from "react";
 import Image from "next/image";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
-export default function UploadImageCard() {
-  const [imageBase64, setImageBase64] = useState<string | null>(null);
+interface UploadImageCardProps {
+  setImageAnalyzed: Dispatch<SetStateAction<string | null | undefined>>;
+  setPorcentageAnalyzed: Dispatch<SetStateAction<number | undefined>>;
+}
+
+export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyzed }: UploadImageCardProps) {
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [sending, setSending] = useState<boolean>(false);
 
@@ -32,45 +39,70 @@ export default function UploadImageCard() {
     e.currentTarget.classList.remove("bg-slate-200");
   };
 
+  function isValidImage(file: File) {
+    const validTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    const maxSizeInMB = 10;
+  
+    const isImage = validTypes.includes(file.type);
+    const isSizeOk = file.size <= maxSizeInMB * 1024 * 1024;
+  
+    return isImage && isSizeOk;
+  }
+  
+
 
   const handleSendImage = async () => {
-    if (!imageBase64) return;
+    if (!selectedFile) return;
+
+    const apiUrl = 'https://tb-ai-api.onrender.com/predict';
+
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    setImageAnalyzed(imagePreview)
 
     try {
       setSending(true);
-      const response = await fetch("/api/upload", {
+      const response = await fetch(apiUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ imageBase64 }),
+        body: formData,
       });
 
       if (response.ok) {
-        alert("Imagem enviada com sucesso!");
-      } else {
-        alert("Erro ao enviar imagem");
-      }
+            const result = await response.json();
+            console.log("Análise recebida:", result);
+            setPorcentageAnalyzed(result.probability_tuberculosis)
+        } else {
+            const errorData = await response.json();
+            alert(`Erro: ${errorData.error}`);
+        }
     } catch (error) {
-      console.error(error);
-      alert("Erro ao enviar imagem");
+        console.error(error);
+        alert("Erro ao conectar com a API de análise.");
     } finally {
-      setSending(false);
+        setSending(false);
     }
   };
 
   
   const handleSelectImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setLoadingImage(true);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImageBase64(reader.result as string);
-      setLoadingImage(false);
-    };
-    reader.readAsDataURL(file);
+    setSelectedFile(file)
+
+    if(isValidImage(file))  {
+      setLoadingImage(true);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+        setLoadingImage(false);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Envie apenas arquivos de imagem válidos (JPEG ou PNG, de no máximo 10MB)")
+    }
   };
 
   const handleDropImage = async (e: DragEvent<HTMLDivElement>) => {
@@ -82,19 +114,28 @@ export default function UploadImageCard() {
     if (files.length > 0) {
       const file = files[0];
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImageBase64(reader.result as string);
-        setLoadingImage(false);
-      };
-      reader.readAsDataURL(file);
+      setSelectedFile(file)
+
+      if(isValidImage(file)){
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result as string);
+          setLoadingImage(false);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert("Envie apenas arquivos de imagem válidos (JPEG ou PNG, de no máximo 10MB)")
+      }
     }
   };
 
 
   const handleClearSelection = () => {
-    setImageBase64(null);
-    setLoadingImage(false);
+    setSelectedFile(null)
+    setImagePreview(null)
+    setImageAnalyzed(null)
+    setPorcentageAnalyzed(0)
+    setLoadingImage(false)
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -109,7 +150,7 @@ export default function UploadImageCard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="-my-2">
-        {!imageBase64 && (
+        {!imagePreview && (
           <div
             className="flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-10 text-center transition-all"
             onDragOver={handleDragOver}
@@ -142,28 +183,29 @@ export default function UploadImageCard() {
       </CardContent>
       <CardFooter className="flex flex-col gap-2">
         <span className="w-full font-medium italic text-center">
-          {!imageBase64
+          {!imagePreview
             ? "O preview da imagem aparecerá logo abaixo quando for selecionada."
             : "Imagem selecionada:"}
         </span>
         <ArrowDown />
-        {imageBase64 ? (
+        {imagePreview ? (
           <div className="border-2 border-slate-300 border-dashed my-4 p-2 w-full flex items-center justify-center rounded-md">
             {loadingImage ? (
               <Skeleton className="w-[200px] h-[200px]" />
             ) : (
               <Image
-                src={imageBase64}
+                src={imagePreview}
                 alt="uploaded image"
                 width={200}
                 height={200}
+                style={{width:'auto'}}
                 onLoad={() => setLoadingImage(false)}
                 onError={() => console.log("Erro ao carregar a imagem")}
               />
             )}
           </div>
         ) : null}
-        {imageBase64 && (
+        {imagePreview && (
           <div className="flex gap-2">
             <Button
               className="bg-emerald-700 cursor-pointer"
