@@ -54,7 +54,7 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
   const handleSendImage = async () => {
     if (!selectedFile) return;
 
-    const apiUrl = 'https://tb-ai-api.onrender.com/predict';
+    const apiUrl = 'https://vitor0ferreira-tb-ai-api.hf.space/predict';
 
     const formData = new FormData();
     formData.append('file', selectedFile);
