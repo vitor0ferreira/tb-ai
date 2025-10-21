@@ -11,6 +11,7 @@ export default function Diagnostico() {
 
     const [imageData, setImageData] = useState<string | null | undefined>()
     const [analysisData, setAnalysisData] = useState<number | undefined>(0)
+    const [isSendingRequest, setIsSendingRequest] = useState<boolean>(false)
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -28,7 +29,7 @@ export default function Diagnostico() {
 
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
             <div className="space-y-6">
-              <UploadImageCard setImageAnalyzed={setImageData} setPorcentageAnalyzed={setAnalysisData} />
+              <UploadImageCard setImageAnalyzed={setImageData} setPorcentageAnalyzed={setAnalysisData} isSendingRequest={isSendingRequest} setIsSendingRequest={setIsSendingRequest} />
             </div>
 
             <div className="space-y-6">

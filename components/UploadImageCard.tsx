@@ -18,14 +18,15 @@ import { Skeleton } from "./ui/skeleton";
 interface UploadImageCardProps {
   setImageAnalyzed: Dispatch<SetStateAction<string | null | undefined>>;
   setPorcentageAnalyzed: Dispatch<SetStateAction<number | undefined>>;
+  setIsSendingRequest: Dispatch<SetStateAction<boolean>>;
+  isSendingRequest: boolean;
 }
 
-export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyzed }: UploadImageCardProps) {
+export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyzed, isSendingRequest, setIsSendingRequest }: UploadImageCardProps) {
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
-  const [sending, setSending] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,12 +50,11 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
     return isImage && isSizeOk;
   }
   
-
-
+  
   const handleSendImage = async () => {
     if (!selectedFile) return;
 
-    const apiUrl = 'https://vitor0ferreira-tb-ai-api.hf.space/predict';
+    const apiUrl = '/api/analysis';
 
     const formData = new FormData();
     formData.append('file', selectedFile);
@@ -62,7 +62,7 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
     setImageAnalyzed(imagePreview)
 
     try {
-      setSending(true);
+      setIsSendingRequest(true);
       const response = await fetch(apiUrl, {
         method: "POST",
         body: formData,
@@ -80,7 +80,7 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
         console.error(error);
         alert("Erro ao conectar com a API de análise.");
     } finally {
-        setSending(false);
+        setIsSendingRequest(false);
     }
   };
 
@@ -209,7 +209,7 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
           <div className="flex gap-2">
             <Button
               className="bg-emerald-700 cursor-pointer"
-              disabled={sending}
+              disabled={isSendingRequest}
               onClick={handleSendImage}
             >
               Analisar imagem
