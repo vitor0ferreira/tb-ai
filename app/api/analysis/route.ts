@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { PrismaClient } from '@/lib/generated/prisma-client';
+
+const prisma = new PrismaClient()
 
 interface LogData {
   user_id: string,
-  request_ip: string,
+  client_ip: string,
   error?: string,
   status: string,
   probability_tuberculosis?: number | null,
@@ -11,8 +14,17 @@ interface LogData {
 
 // Função para fazer a requisição de log (que salvará no BD)
 async function logToDatabase(data: LogData) {
-  // Query do log para o BD
-  console.log(`Dados:`, data);
+  const now = new Date();
+
+  await prisma.analysisLog.create({
+    data: {
+      client_ip: data.client_ip,
+      created_at: now,
+      duration_ms: data.duration_ms || null,
+      error: data.error || null,
+      status: data.status
+    }
+  })
 }
 
 export async function POST(request: NextRequest) {
@@ -34,7 +46,7 @@ export async function POST(request: NextRequest) {
     });
 
     const endRequestTime = performance.now();
-    const requestDuration = startRequestTime - endRequestTime;
+    const requestDuration = endRequestTime - startRequestTime;
 
     if (!aiResponse.ok) {
       const errorData = await aiResponse.json();
@@ -42,8 +54,8 @@ export async function POST(request: NextRequest) {
       // LOG DE ERRO (incluindo IP)
       await logToDatabase({
         user_id: '10',
-        request_ip: ipAddress,
-        duration_ms: requestDuration,
+        client_ip: ipAddress,
+        duration_ms: Number(requestDuration.toFixed(2)),
         error: errorData.error,
         status: 'Erro na IA',
       });
@@ -56,8 +68,8 @@ export async function POST(request: NextRequest) {
     // FAZ O LOG NO BANCO DE DADOS
     await logToDatabase({
         user_id: '10',
-        request_ip: ipAddress,
-        duration_ms: requestDuration,
+        client_ip: ipAddress,
+        duration_ms: Number(requestDuration.toFixed(2)),
         status: 'Sucesso',
         probability_tuberculosis: analysisResult.probability_tuberculosis,
     });
@@ -71,7 +83,7 @@ export async function POST(request: NextRequest) {
     // LOG DE ERRO INTERNO (incluindo IP)
     await logToDatabase({
       user_id: '10',
-      request_ip: ipAddress,
+      client_ip: ipAddress,
       status: 'Erro interno',
       error: (error as Error).message
     });

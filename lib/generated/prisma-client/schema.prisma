@@ -17,11 +17,11 @@ datasource db {
 model AnalysisLog {
   id                       String   @id @default(uuid())
   created_at               DateTime @default(now())
-  client_ip                String
-  error                    String
+  client_ip                String?
+  error                    String?
   status                   String
-  duration_ms              Float
-  probability_tuberculosis Float
+  duration_ms              Float?
+  probability_tuberculosis Float?
 }
 
 model User {

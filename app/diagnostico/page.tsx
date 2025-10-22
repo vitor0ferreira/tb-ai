@@ -69,14 +69,14 @@ export default function Diagnostico() {
                               <span className="font-bold text-sm">
                                 Probabilidade de Tuberculose:
                               </span>
-                              <span className="text-red-600 font-bold">
-                                {analysisData ? `${(analysisData * 100).toFixed(2)}%` : '10%'}
+                              <span className="text-red-600 font-bold duration-700">
+                                {analysisData ? `${(analysisData * 100).toFixed(2)}%` : '--'}
                               </span>
                             </div>
                             <div className="w-full bg-gray-200 rounded-full h-2.5">
                               <div
-                                className="bg-red-600 h-2.5 rounded-full"
-                                style={{ width: analysisData ? `${(analysisData * 100).toFixed(2)}%` : '10%' }}
+                                className="bg-red-600 h-2.5 rounded-full duration-700 transition-discrete"
+                                style={{ width: analysisData ? `${(analysisData * 100).toFixed(2)}%` : '0%' }}
                               ></div>
                             </div>
                           </div>
