@@ -14,6 +14,9 @@ import Image from "next/image";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface UploadImageCardProps {
   setImageAnalyzed: Dispatch<SetStateAction<string | null | undefined>>;
@@ -24,6 +27,9 @@ interface UploadImageCardProps {
 
 export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyzed, isSendingRequest, setIsSendingRequest }: UploadImageCardProps) {
 
+  const { useSession } = authClient
+  const {data: session} = useSession()
+  const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
@@ -53,6 +59,15 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
   
   const handleSendImage = async () => {
     if (!selectedFile) return;
+    if (!session){
+      toast.warning("Faça login para realizar o diagnóstico.", {
+        style: {
+          background: '#ffe500'
+        }
+      });
+      router.push("/sign-in");
+      return;
+    }
 
     const apiUrl = '/api/analysis';
 
@@ -72,13 +87,32 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
             const result = await response.json();
             console.log("Análise recebida:", result);
             setPorcentageAnalyzed(result.probability_tuberculosis)
+            toast.promise(result, {
+              loading: "Analisando...",
+              success: ()=>{
+                return {
+                  message: "Análise feita com sucesso.",
+                  description: "Confira o resultado.",
+                  style: {backgroundColor: "green", color: 'white'},
+                  position: 'bottom-center'
+                }
+              },
+              error: ()=>{
+                return {
+                  message: "Análise não realizada.",
+                  description: "Algo deu errado com sua requisição, tente novamente.",
+                  style: {backgroundColor: "red", color: 'white'},
+                  position: 'bottom-center'
+                }
+              }
+            })
         } else {
             const errorData = await response.json();
             alert(`Erro: ${errorData.error}`);
         }
     } catch (error) {
         console.error(error);
-        alert("Erro ao conectar com a API de análise.");
+        toast.error("Erro na requisição de diagnostico.")
     } finally {
         setIsSendingRequest(false);
     }

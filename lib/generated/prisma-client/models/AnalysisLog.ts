@@ -37,6 +37,7 @@ export type AnalysisLogSumAggregateOutputType = {
 
 export type AnalysisLogMinAggregateOutputType = {
   id: string | null
+  userId: string | null
   created_at: Date | null
   client_ip: string | null
   error: string | null
@@ -47,6 +48,7 @@ export type AnalysisLogMinAggregateOutputType = {
 
 export type AnalysisLogMaxAggregateOutputType = {
   id: string | null
+  userId: string | null
   created_at: Date | null
   client_ip: string | null
   error: string | null
@@ -57,6 +59,7 @@ export type AnalysisLogMaxAggregateOutputType = {
 
 export type AnalysisLogCountAggregateOutputType = {
   id: number
+  userId: number
   created_at: number
   client_ip: number
   error: number
@@ -79,6 +82,7 @@ export type AnalysisLogSumAggregateInputType = {
 
 export type AnalysisLogMinAggregateInputType = {
   id?: true
+  userId?: true
   created_at?: true
   client_ip?: true
   error?: true
@@ -89,6 +93,7 @@ export type AnalysisLogMinAggregateInputType = {
 
 export type AnalysisLogMaxAggregateInputType = {
   id?: true
+  userId?: true
   created_at?: true
   client_ip?: true
   error?: true
@@ -99,6 +104,7 @@ export type AnalysisLogMaxAggregateInputType = {
 
 export type AnalysisLogCountAggregateInputType = {
   id?: true
+  userId?: true
   created_at?: true
   client_ip?: true
   error?: true
@@ -196,6 +202,7 @@ export type AnalysisLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type AnalysisLogGroupByOutputType = {
   id: string
+  userId: string
   created_at: Date
   client_ip: string | null
   error: string | null
@@ -229,6 +236,7 @@ export type AnalysisLogWhereInput = {
   OR?: Prisma.AnalysisLogWhereInput[]
   NOT?: Prisma.AnalysisLogWhereInput | Prisma.AnalysisLogWhereInput[]
   id?: Prisma.StringFilter<"AnalysisLog"> | string
+  userId?: Prisma.StringFilter<"AnalysisLog"> | string
   created_at?: Prisma.DateTimeFilter<"AnalysisLog"> | Date | string
   client_ip?: Prisma.StringNullableFilter<"AnalysisLog"> | string | null
   error?: Prisma.StringNullableFilter<"AnalysisLog"> | string | null
@@ -239,6 +247,7 @@ export type AnalysisLogWhereInput = {
 
 export type AnalysisLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   client_ip?: Prisma.SortOrderInput | Prisma.SortOrder
   error?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -252,6 +261,7 @@ export type AnalysisLogWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AnalysisLogWhereInput | Prisma.AnalysisLogWhereInput[]
   OR?: Prisma.AnalysisLogWhereInput[]
   NOT?: Prisma.AnalysisLogWhereInput | Prisma.AnalysisLogWhereInput[]
+  userId?: Prisma.StringFilter<"AnalysisLog"> | string
   created_at?: Prisma.DateTimeFilter<"AnalysisLog"> | Date | string
   client_ip?: Prisma.StringNullableFilter<"AnalysisLog"> | string | null
   error?: Prisma.StringNullableFilter<"AnalysisLog"> | string | null
@@ -262,6 +272,7 @@ export type AnalysisLogWhereUniqueInput = Prisma.AtLeast<{
 
 export type AnalysisLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   client_ip?: Prisma.SortOrderInput | Prisma.SortOrder
   error?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -280,6 +291,7 @@ export type AnalysisLogScalarWhereWithAggregatesInput = {
   OR?: Prisma.AnalysisLogScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AnalysisLogScalarWhereWithAggregatesInput | Prisma.AnalysisLogScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"AnalysisLog"> | string
+  userId?: Prisma.StringWithAggregatesFilter<"AnalysisLog"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"AnalysisLog"> | Date | string
   client_ip?: Prisma.StringNullableWithAggregatesFilter<"AnalysisLog"> | string | null
   error?: Prisma.StringNullableWithAggregatesFilter<"AnalysisLog"> | string | null
@@ -290,6 +302,7 @@ export type AnalysisLogScalarWhereWithAggregatesInput = {
 
 export type AnalysisLogCreateInput = {
   id?: string
+  userId: string
   created_at?: Date | string
   client_ip?: string | null
   error?: string | null
@@ -300,6 +313,7 @@ export type AnalysisLogCreateInput = {
 
 export type AnalysisLogUncheckedCreateInput = {
   id?: string
+  userId: string
   created_at?: Date | string
   client_ip?: string | null
   error?: string | null
@@ -310,6 +324,7 @@ export type AnalysisLogUncheckedCreateInput = {
 
 export type AnalysisLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client_ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -320,6 +335,7 @@ export type AnalysisLogUpdateInput = {
 
 export type AnalysisLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client_ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -330,6 +346,7 @@ export type AnalysisLogUncheckedUpdateInput = {
 
 export type AnalysisLogCreateManyInput = {
   id?: string
+  userId: string
   created_at?: Date | string
   client_ip?: string | null
   error?: string | null
@@ -340,6 +357,7 @@ export type AnalysisLogCreateManyInput = {
 
 export type AnalysisLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client_ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -350,6 +368,7 @@ export type AnalysisLogUpdateManyMutationInput = {
 
 export type AnalysisLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client_ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   error?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -360,6 +379,7 @@ export type AnalysisLogUncheckedUpdateManyInput = {
 
 export type AnalysisLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   client_ip?: Prisma.SortOrder
   error?: Prisma.SortOrder
@@ -375,6 +395,7 @@ export type AnalysisLogAvgOrderByAggregateInput = {
 
 export type AnalysisLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   client_ip?: Prisma.SortOrder
   error?: Prisma.SortOrder
@@ -385,6 +406,7 @@ export type AnalysisLogMaxOrderByAggregateInput = {
 
 export type AnalysisLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   client_ip?: Prisma.SortOrder
   error?: Prisma.SortOrder
@@ -422,6 +444,7 @@ export type NullableFloatFieldUpdateOperationsInput = {
 
 export type AnalysisLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   created_at?: boolean
   client_ip?: boolean
   error?: boolean
@@ -432,6 +455,7 @@ export type AnalysisLogSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type AnalysisLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   created_at?: boolean
   client_ip?: boolean
   error?: boolean
@@ -442,6 +466,7 @@ export type AnalysisLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type AnalysisLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  userId?: boolean
   created_at?: boolean
   client_ip?: boolean
   error?: boolean
@@ -452,6 +477,7 @@ export type AnalysisLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 
 export type AnalysisLogSelectScalar = {
   id?: boolean
+  userId?: boolean
   created_at?: boolean
   client_ip?: boolean
   error?: boolean
@@ -460,13 +486,14 @@ export type AnalysisLogSelectScalar = {
   probability_tuberculosis?: boolean
 }
 
-export type AnalysisLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "created_at" | "client_ip" | "error" | "status" | "duration_ms" | "probability_tuberculosis", ExtArgs["result"]["analysisLog"]>
+export type AnalysisLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "created_at" | "client_ip" | "error" | "status" | "duration_ms" | "probability_tuberculosis", ExtArgs["result"]["analysisLog"]>
 
 export type $AnalysisLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "AnalysisLog"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    userId: string
     created_at: Date
     client_ip: string | null
     error: string | null
@@ -897,6 +924,7 @@ export interface Prisma__AnalysisLogClient<T, Null = never, ExtArgs extends runt
  */
 export interface AnalysisLogFieldRefs {
   readonly id: Prisma.FieldRef<"AnalysisLog", 'String'>
+  readonly userId: Prisma.FieldRef<"AnalysisLog", 'String'>
   readonly created_at: Prisma.FieldRef<"AnalysisLog", 'DateTime'>
   readonly client_ip: Prisma.FieldRef<"AnalysisLog", 'String'>
   readonly error: Prisma.FieldRef<"AnalysisLog", 'String'>

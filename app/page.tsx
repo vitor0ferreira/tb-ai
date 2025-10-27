@@ -135,7 +135,7 @@ export default function Home() {
                 <div className="space-y-6">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-7xl">Sobre o Projeto</h2>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-2xl/relaxed">
-                    O TBScan é um projeto desenvolvido por pesquisadores brasileiros com o objetivo de auxiliar no
+                    O TB.AI é um projeto desenvolvido por estudantes do curso de Análise e Desenvolvimento de Sistemas do IFTM Parque Avançado Uberaba com o objetivo de auxiliar no
                     diagnóstico precoce da tuberculose, especialmente em regiões com acesso limitado a especialistas.
                   </p>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-2xl/relaxed">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Roboto } from "next/font/google";
 import { BsFillLungsFill } from "react-icons/bs";
+import { Toaster } from 'sonner';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -36,7 +37,7 @@ export default function RootLayout({
           <div className="container flex h-16 items-center justify-between px-4">
             <div className="flex items-center gap-2">
               <BsFillLungsFill className="h-6 w-6 md:h-8 md:w-8 text-primary" />
-              <span className="text-xl md:text-3xl font-bold">TB.AI</span>
+              <span className="text-xl md:text-3xl font-bold"><Link href={'/'}>TB.AI</Link></span>
             </div>
 
             <Navbar />
@@ -106,6 +107,7 @@ export default function RootLayout({
             </p>
           </div>
         </footer>
+        <Toaster/>
       </body>
     </html>
   );

@@ -73,6 +73,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const AnalysisLogScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   created_at: 'created_at',
   client_ip: 'client_ip',
   error: 'error',

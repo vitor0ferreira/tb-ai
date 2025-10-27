@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@/lib/generated/prisma-client/client';
+import { auth } from '@/lib/auth';
+import { headers } from "next/headers"
 
 const prisma = new PrismaClient()
 
@@ -18,9 +20,11 @@ async function logToDatabase(data: LogData) {
 
   await prisma.analysisLog.create({
     data: {
+      userId: data.user_id,
       client_ip: data.client_ip,
       created_at: now,
       duration_ms: data.duration_ms || null,
+      probability_tuberculosis: data.probability_tuberculosis,
       error: data.error || null,
       status: data.status
     }
@@ -30,7 +34,16 @@ async function logToDatabase(data: LogData) {
 export async function POST(request: NextRequest) {
   
   // CAPTURA O IP DO CLIENTE.
-  const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'IP_NAO_ENCONTRADO';
+  const session = await auth.api.getSession({
+        headers: await headers()
+    })
+
+  if(!session){
+    return NextResponse.json({ error: 'Precisa estar logado para fazer diagnostico' }, { status: 401 });
+  }
+  const ipSession = session?.session.ipAddress;
+
+  const userId = session?.user.id;
 
   const startRequestTime = performance.now();
 
@@ -53,8 +66,8 @@ export async function POST(request: NextRequest) {
       
       // LOG DE ERRO (incluindo IP)
       await logToDatabase({
-        user_id: '10',
-        client_ip: ipAddress,
+        user_id: userId as string,
+        client_ip: ipSession as string,
         duration_ms: Number(requestDuration.toFixed(2)),
         error: errorData.error,
         status: 'Erro na IA',
@@ -67,8 +80,8 @@ export async function POST(request: NextRequest) {
 
     // FAZ O LOG NO BANCO DE DADOS
     await logToDatabase({
-        user_id: '10',
-        client_ip: ipAddress,
+        user_id: userId as string,
+        client_ip: ipSession as string,
         duration_ms: Number(requestDuration.toFixed(2)),
         status: 'Sucesso',
         probability_tuberculosis: analysisResult.probability_tuberculosis,
@@ -82,8 +95,8 @@ export async function POST(request: NextRequest) {
     
     // LOG DE ERRO INTERNO (incluindo IP)
     await logToDatabase({
-      user_id: '10',
-      client_ip: ipAddress,
+      user_id: userId as string,
+      client_ip: ipSession as string,
       status: 'Erro interno',
       error: (error as Error).message
     });

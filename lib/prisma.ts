@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@/lib/generated/prisma-client/client'
 
 // Declaração para anexar o PrismaClient ao objeto global em desenvolvimento
 declare global {
