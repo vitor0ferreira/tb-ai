@@ -14,18 +14,25 @@ import Image from "next/image";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface UploadImageCardProps {
   setImageAnalyzed: Dispatch<SetStateAction<string | null | undefined>>;
   setPorcentageAnalyzed: Dispatch<SetStateAction<number | undefined>>;
+  setIsSendingRequest: Dispatch<SetStateAction<boolean>>;
+  isSendingRequest: boolean;
 }
 
-export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyzed }: UploadImageCardProps) {
+export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyzed, isSendingRequest, setIsSendingRequest }: UploadImageCardProps) {
 
+  const { useSession } = authClient
+  const {data: session} = useSession()
+  const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
-  const [sending, setSending] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,12 +56,20 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
     return isImage && isSizeOk;
   }
   
-
-
+  
   const handleSendImage = async () => {
     if (!selectedFile) return;
+    if (!session){
+      toast.warning("Faça login para realizar o diagnóstico.", {
+        style: {
+          background: '#ffe500'
+        }
+      });
+      router.push("/sign-in");
+      return;
+    }
 
-    const apiUrl = 'https://vitor0ferreira-tb-ai-api.hf.space/predict';
+    const apiUrl = '/api/analysis';
 
     const formData = new FormData();
     formData.append('file', selectedFile);
@@ -62,7 +77,7 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
     setImageAnalyzed(imagePreview)
 
     try {
-      setSending(true);
+      setIsSendingRequest(true);
       const response = await fetch(apiUrl, {
         method: "POST",
         body: formData,
@@ -72,15 +87,34 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
             const result = await response.json();
             console.log("Análise recebida:", result);
             setPorcentageAnalyzed(result.probability_tuberculosis)
+            toast.promise(result, {
+              loading: "Analisando...",
+              success: ()=>{
+                return {
+                  message: "Análise feita com sucesso.",
+                  description: "Confira o resultado.",
+                  style: {backgroundColor: "green", color: 'white'},
+                  position: 'bottom-center'
+                }
+              },
+              error: ()=>{
+                return {
+                  message: "Análise não realizada.",
+                  description: "Algo deu errado com sua requisição, tente novamente.",
+                  style: {backgroundColor: "red", color: 'white'},
+                  position: 'bottom-center'
+                }
+              }
+            })
         } else {
             const errorData = await response.json();
             alert(`Erro: ${errorData.error}`);
         }
     } catch (error) {
         console.error(error);
-        alert("Erro ao conectar com a API de análise.");
+        toast.error("Erro na requisição de diagnostico.")
     } finally {
-        setSending(false);
+        setIsSendingRequest(false);
     }
   };
 
@@ -209,7 +243,7 @@ export default function UploadImageCard({ setImageAnalyzed, setPorcentageAnalyze
           <div className="flex gap-2">
             <Button
               className="bg-emerald-700 cursor-pointer"
-              disabled={sending}
+              disabled={isSendingRequest}
               onClick={handleSendImage}
             >
               Analisar imagem
