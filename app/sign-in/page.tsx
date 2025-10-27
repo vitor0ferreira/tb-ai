@@ -35,8 +35,8 @@ export default function SignIn() {
                   variant="outline"
                   className={cn("w-full gap-2")}
                   onClick={()=>{
-                    signIn()
-                    toast.promise(signIn, {
+                    const signInPromise = signIn()
+                    toast.promise(signInPromise, {
                       loading: "Fazendo login...",
                       success: ()=>{
                         return "Login feito com sucesso."
