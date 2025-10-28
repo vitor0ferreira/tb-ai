@@ -8,19 +8,12 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { authClient, signInGithub, signInGoogle } from "@/lib/auth-client";
+import { signInGithub, signInGoogle } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function SignIn() {
 
-  const router = useRouter();
-  const session = authClient.useSession();
-
-  if(session){
-    router.push("/");
-  }
   
   return (
     <main className="min-h-screen flex items-center justify-center">
