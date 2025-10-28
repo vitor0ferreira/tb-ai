@@ -14,6 +14,7 @@ import {
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
+import UserMenu from "@/components/UserMenu";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -22,7 +23,7 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: "TB.AI",
-  description: "Criado com Next e hospedado na Vercel.",
+  description: "Detector de tuberculose via inteligência artificial e análise de imagens de Raio-X. Criado com Next e hospedado na Vercel.",
 };
 
 export default function RootLayout({
@@ -89,6 +90,7 @@ export default function RootLayout({
                 >
                   Contato
                 </Link>
+                <UserMenu />
               </PopoverContent>
             </Popover>
           </div>

@@ -4,9 +4,15 @@ export const authClient =  createAuthClient({
     //you can pass client configuration here
 })
 
-export const signIn = async () => {
+export const signInGithub = async () => {
     await authClient.signIn.social({
         provider: "github",
+    })
+}
+
+export const signInGoogle = async () => {
+    await authClient.signIn.social({
+        provider: "google",
     })
 }
 

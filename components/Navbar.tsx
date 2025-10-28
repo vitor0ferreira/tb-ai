@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 export default async function Navbar() {
 
   const session = await auth.api.getSession({
-    headers: await headers()
+    headers: await headers(),
   })
 
   return (
@@ -24,10 +24,12 @@ export default async function Navbar() {
         <Link href="/#contato" className="font-medium hover:underline underline-offset-4">
           Contato
         </Link>
-        {session?.user.email == "vitor_hugo.f.s@hotmail.com"
-          ? <Link href="/logs" className="font-medium hover:underline underline-offset-4">Logs</Link> : null}
+        {["vitor_hugo.f.s@hotmail.com", "viniciospbalduino@gmail.com"].includes(session?.user.email || "") && (
+          <Link href="/logs" className="font-medium hover:underline underline-offset-4">
+            Logs
+          </Link>
+        )}
       </div>
-
 
       <UserMenu />
     </nav>

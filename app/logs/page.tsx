@@ -1,12 +1,31 @@
+import { auth } from "@/lib/auth";
 import { PrismaClient } from "@/lib/generated/prisma-client/client";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { FaDatabase, FaInfoCircle } from "react-icons/fa";
 
 const prisma = new PrismaClient();
 
 export default async function LogsPage() {
+
+  const session = await auth.api.getSession({
+      headers: await headers()
+  })
+
+  if(!session){
+    redirect("/sign-in");
+  }
+
   const logs = await prisma.analysisLog.findMany({
     orderBy: { created_at: "desc" },
   });
+
+  const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+    }
+  })
 
   //Inferências simples sobre os dados
   const totalLogs = logs.length;
@@ -16,6 +35,7 @@ export default async function LogsPage() {
   const mediaTempoResposta = logs.length > 0
     ? logs.reduce((acc, log) => acc + (log.duration_ms || 0), 0) / logs.length
     : 0;
+  
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-sky-50">
@@ -59,7 +79,7 @@ export default async function LogsPage() {
               </div>
               <div className="space-y-2 text-muted-foreground text-lg">
                 <p><strong>ID:</strong> {lastLog.id}</p>
-                <p><strong>Resultado:</strong> {Number((lastLog.probability_tuberculosis as number).toFixed(2))*100}%</p>
+                <p><strong>Resultado:</strong> {(Math.fround(lastLog.probability_tuberculosis as number)*100).toFixed(3)}%</p>
                 <p><strong>Status:</strong> {lastLog.status}</p>
                 <p><strong>Data:</strong> {new Date(lastLog.created_at).toLocaleString("pt-BR")}</p>
                 {lastLog.userId && <p><strong>ID do Usuário:</strong> {lastLog.userId}</p>}
@@ -74,7 +94,7 @@ export default async function LogsPage() {
                 <thead className="bg-sky-100">
                   <tr>
                     <th className="px-4 py-3 border-b text-lg font-semibold">ID</th>
-                    <th className="px-4 py-3 border-b text-lg font-semibold">UserID</th>
+                    <th className="px-4 py-3 border-b text-lg font-semibold">Usuário</th>
                     <th className="px-4 py-3 border-b text-lg font-semibold">Resultado</th>
                     <th className="px-4 py-3 border-b text-lg font-semibold">IP</th>
                     <th className="px-4 py-3 border-b text-lg font-semibold">Status</th>
@@ -92,9 +112,9 @@ export default async function LogsPage() {
                       }`}
                     >
                       <td className="px-4 py-3">{log.id}</td>
-                      <td className="px-4 py-3">{log.userId}</td>
+                      <td className="px-4 py-3">{users.filter((user)=> user.id == log.userId)[0].name}</td>
                       <td className="px-4 py-3 font-semibold">
-                        {log.probability_tuberculosis && (Number((log.probability_tuberculosis as number).toFixed(2)))*100}
+                        {log.probability_tuberculosis && (Math.fround(log.probability_tuberculosis as number)*100).toFixed(3)}
                         {log.probability_tuberculosis && "%"}
                       </td>
                       <td className="px-4 py-3">{log.client_ip}</td>
